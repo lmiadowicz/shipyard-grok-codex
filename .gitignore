@@ -1,0 +1,10 @@
+.DS_Store
+*.log
+.agents/delivery/STATUS.md
+.agents/delivery/ACTIONS.json
+.agents/delivery/orchestrate.log
+.agents/delivery/SMOKE-*.md
+.verification/
+__pycache__/
+*.pyc
+.cache/
