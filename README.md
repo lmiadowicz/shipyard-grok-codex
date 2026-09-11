@@ -1,14 +1,16 @@
 # startup-harness-grok-codex
 
-Public **Grok Bot + Codex + Limen** delivery harness: same base as the Codex-only harness, **plus** Grok token-budget rules (thin coordinator, Delivery owns the loop, no FYI spam).
+**For orchestrating my startup projects — I build microsaas, tools, mobile apps, etc. Optimized for highest quality, reliability, and token efficiency.**
 
-Independent git history from [`startup-harness-codex`](https://github.com/lmiadowicz/startup-harness-codex) — copy patterns freely; not a fork remote.
+Do orkiestracji projektów startupowych (mikrosaasy, narzędzia, apki mobilne itd.) — jakość, niezawodność i oszczędność tokenów.
+
+**Grok Bot + Codex + Limen** delivery harness: same base as the Codex-only harness, **plus** Grok token-budget rules (thin coordinator, Delivery owns the loop, no FYI spam). Independent git history from [`startup-harness-codex`](https://github.com/lmiadowicz/startup-harness-codex).
 
 ## Get Limen
 
 **Download Limen from:** https://mega.dev/autonomous-product-development  
 
-You can download Limen there (and related Herdr tooling).
+You can download Limen there (and related Herdr tooling). Assumes `limen` / `herdr` / `gh` / Codex on PATH (**Mac or VPS**).
 
 ## How it works
 
@@ -35,6 +37,8 @@ Details: [`docs/how-it-works.md`](docs/how-it-works.md).
 
 ## Install into a project
 
+Works on **MacBook** and **Linux VPS** (`setup.sh` detects Darwin vs Linux).
+
 ```bash
 git clone https://github.com/lmiadowicz/startup-harness-grok-codex.git
 cd startup-harness-grok-codex
@@ -42,6 +46,8 @@ bash setup.sh
 bash setup.sh /path/to/your-product
 export PRODUCT_ROOT=/path/to/your-product
 bash "$PRODUCT_ROOT/.agents/delivery/scripts/status-dump.sh"
+# macOS optional: install-launchd.sh
+# Linux/VPS: cron or systemd — see docs/install-into-project.md
 ```
 
 Read `grok/TOKEN-BUDGET.md` before wiring Grok Bot routines.
@@ -61,7 +67,9 @@ Full guide: [`docs/install-into-project.md`](docs/install-into-project.md).
 > **CRITICAL:** **TARGET 100%** = design bar, **NOT** measured.  
 > **~90%** = harness coverage design goal / example render, **NOT** a claimed measured score.
 
-Rendered with **Piotr’s mega-card** ([piotrkrych2/Random-Skills](https://github.com/piotrkrych2/Random-Skills)).
+What traits / ORC / groups mean: [`docs/chart-traits.md`](docs/chart-traits.md).
+
+Rendered with **Piotr’s mega-card** ([piotrkrych2/Random-Skills](https://github.com/piotrkrych2/Random-Skills)) — FUT card + 24-spoke.
 
 ### TARGET 100%
 
@@ -73,8 +81,10 @@ Rendered with **Piotr’s mega-card** ([piotrkrych2/Random-Skills](https://githu
 
 ```bash
 npm run charts
-# or python3 vendor/mega-card/render.py …
+# or: bash scripts/render-charts.sh
 ```
+
+Needs Google Chrome / Chromium. Shell wrapper calls vendored mega-card; no matplotlib / Python venv for harness DX.
 
 ## Credits
 
@@ -83,6 +93,10 @@ npm run charts
 - **pstack (optional):** [open-pstack](https://github.com/ericlitman/open-pstack) — see `docs/pstack.md`
 
 See `ATTRIBUTION.md`.
+
+## Related
+
+- Codex-only sibling: [`startup-harness-codex`](https://github.com/lmiadowicz/startup-harness-codex)
 
 ## License
 

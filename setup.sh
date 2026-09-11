@@ -1,11 +1,19 @@
 #!/usr/bin/env bash
 # Startup harness setup — check tools, print limen URL, optionally install into a product repo.
-# Shell-first (Mac + VPS). Optional: npm run charts for mega-card rebuild.
+# Shell-first. Works on MacBook (Darwin) and VPS (Linux). No Mac-only assumptions for core path.
 set -euo pipefail
 HERE="$(cd "$(dirname "$0")" && pwd)"
 TARGET="${1:-}"
 
+OS="$(uname -s)"
+case "$OS" in
+  Darwin) OS_LABEL="macOS (Darwin)" ;;
+  Linux)  OS_LABEL="Linux (VPS / server)" ;;
+  *)      OS_LABEL="$OS" ;;
+esac
+
 echo "== startup-harness setup =="
+echo "Host: $OS_LABEL"
 echo
 
 check() {
@@ -33,6 +41,7 @@ echo "Limen download: https://mega.dev/autonomous-product-development"
 echo "Charts skill (mega-card): https://github.com/piotrkrych2/Random-Skills"
 echo "How it works: docs/how-it-works.md"
 echo "Install guide: docs/install-into-project.md"
+echo "Chart traits: docs/chart-traits.md"
 echo
 
 if [[ -z "$TARGET" ]]; then
@@ -40,8 +49,17 @@ if [[ -z "$TARGET" ]]; then
   echo "  bash setup.sh /path/to/your-product-repo"
   echo "Then:"
   echo "  export PRODUCT_ROOT=/path/to/your-product-repo"
-  echo "  bash .agents/delivery/scripts/status-dump.sh"
-  echo "  bash .agents/delivery/scripts/install-launchd.sh   # macOS launchd example"
+  echo "  bash \"\$PRODUCT_ROOT/.agents/delivery/scripts/status-dump.sh\""
+  echo
+  if [[ "$OS" == "Darwin" ]]; then
+    echo "Optional (macOS only) — launchd loop:"
+    echo "  bash \"\$PRODUCT_ROOT/.agents/delivery/scripts/install-launchd.sh\""
+  else
+    echo "Optional (Linux / VPS) — schedule status-dump via cron or systemd, e.g.:"
+    echo "  # cron every 15m:"
+    echo "  */15 * * * * PRODUCT_ROOT=/path/to/product bash /path/to/product/.agents/delivery/scripts/status-dump.sh"
+    echo "  # or a simple systemd timer unit calling the same script"
+  fi
   exit 0
 fi
 
@@ -64,3 +82,9 @@ if [[ ! -d "$TARGET/board" && -d "$HERE/board" ]]; then
 fi
 echo "Installed scripts → $DEST"
 echo "PRODUCT_ROOT tip: export PRODUCT_ROOT=\"$TARGET\""
+echo
+if [[ "$OS" == "Darwin" ]]; then
+  echo "Next (macOS optional): bash \"$DEST/install-launchd.sh\""
+else
+  echo "Next (Linux/VPS): wire cron or systemd to \"$DEST/status-dump.sh\" (see docs/install-into-project.md)"
+fi
