@@ -1,5 +1,5 @@
 {
-  "name": "startup-harness-grok-codex",
+  "name": "shipyard-grok-codex",
   "private": true,
   "type": "module",
   "description": "AI delivery shipyard \u2014 board \u2192 limen/Pi \u2192 Codex \u2192 review \u2192 merge. Quality, reliability, token efficiency.",

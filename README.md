@@ -4,11 +4,11 @@
   <img src="docs/brand/shipyard-readme-banner.png" alt="Shipyard — AI delivery harness" width="100%"/>
 </p>
 
-**AI delivery shipyard for microsaas, tools, and mobile apps** — quality, reliability, and token efficiency.
+**Board → tickets → limen/Pi → Codex → review → merge.** A delivery harness for microsaas, tools, and mobile apps — quality, reliability, token efficiency.
 
-Public repo name today: [`startup-harness-grok-codex`](https://github.com/lmiadowicz/startup-harness-grok-codex) (branding target: **shipyard-grok-codex**). Sibling: [`startup-harness-codex`](https://github.com/lmiadowicz/startup-harness-codex).
+Repo: [`shipyard-grok-codex`](https://github.com/lmiadowicz/shipyard-grok-codex) · Sibling: [`shipyard-codex`](https://github.com/lmiadowicz/shipyard-codex)
 
-Grok Bot stays a **thin coordinator**. Delivery owns the board loop. Codex + limen/Pi do the coding work.
+Grok stays thin (merge/taste). Delivery owns the board. Codex + limen/Pi do the coding.
 
 ## Why this exists
 
@@ -96,8 +96,8 @@ Closing unmeasured gaps (especially KTX + parallelism) is how measured ORC moves
 ## Install (Mac + VPS)
 
 ```bash
-git clone https://github.com/lmiadowicz/startup-harness-grok-codex.git
-cd startup-harness-grok-codex
+git clone https://github.com/lmiadowicz/shipyard-grok-codex.git
+cd shipyard-grok-codex
 bash setup.sh              # check tools; offer herdr / Pi / limen links
 bash setup.sh /path/to/your-product
 export PRODUCT_ROOT=/path/to/your-product
