@@ -22,20 +22,15 @@ Most “agent coding” setups burn tokens, drift UI, and ship half-done PRs. Th
 
 Limen: https://mega.dev/autonomous-product-development · Assessment: https://mega.dev/#assessment · Charts: [piotrkrych2/Random-Skills mega-card](https://github.com/piotrkrych2/Random-Skills)
 
-## How it works (animated)
+## How it works
 
-Open the interactive walkthrough — board fills with successive features while the pipeline lights up:
+<p align="center">
+  <img src="docs/orchestration-flow.gif" alt="Shipyard board flow: PARK → NEXT → NOW → workers → review → merge" width="100%"/>
+</p>
 
-**→ [`docs/orchestration-animation.html`](docs/orchestration-animation.html)**
+Vision seeds the board. Features move **PARK → NEXT → NOW**, get Done-when tickets, then limen/Pi + Codex ship them. Reviewer gates merge; thin Grok only for merge/taste. Board refills. Loop.
 
-What you’ll see:
-
-1. Vision + styleguide seed the work
-2. Features land in **PARK**, promote to **NEXT**, pull into **NOW**
-3. Ticket gets falsifiable **Done-when**
-4. **limen / Pi** workers spawn → **Codex** implements
-5. **Reviewer** PASS/HOLD → thin **Grok** for merge/taste → **Merge**
-6. Board refills; the next feature ships
+Interactive: [`docs/orchestration-animation.html`](docs/orchestration-animation.html)
 
 ```mermaid
 flowchart LR

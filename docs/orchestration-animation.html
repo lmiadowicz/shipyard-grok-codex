@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>How the shipyard runs — Grok + Codex + Limen</title>
+<title>Shipyard Grok+Codex — how the board ships</title>
 <style>
   :root {
     --bg: #0c1016;
@@ -352,7 +352,7 @@
   <header>
     <div>
       <h1>How the shipyard runs</h1>
-      <p class="sub">Successive features flow Vision → Board → Ticket → workers → review → merge — filling NOW / NEXT / PARK over time.</p>
+      <p class="sub">Shipyard Grok+Codex: Vision/Styleguide → board fills NOW/NEXT/PARK with feature tickets → limen/Pi → Codex (+ thin Grok) → review → merge → board updates.</p>
     </div>
     <div class="controls">
       <span class="stage" id="stageLbl">Vision</span>
@@ -401,7 +401,7 @@
       <span><span class="dot" style="background:var(--grok)"></span>Grok thin coordinator</span>
       <span><span class="dot" style="background:var(--vision)"></span>Vision / Styleguide</span>
     </div>
-    <span class="note">shipyard-grok-codex · autoplay loop</span>
+    <span class="note">Shipyard Grok+Codex · board builds features · autoplay</span>
   </footer>
 </div>
 <script>
@@ -553,8 +553,17 @@
   document.getElementById("prev").addEventListener("click", () => { stop(); setStep(i - 1); });
   document.getElementById("nextBtn").addEventListener("click", () => { stop(); setStep(i + 1); });
 
-  setStep(0);
-  play();
+  // ?step=N freezes on scene N (no autoplay) — used for GIF capture
+  const params = new URLSearchParams(location.search);
+  const stepParam = params.get("step");
+  if (stepParam !== null && stepParam !== "" && !Number.isNaN(Number(stepParam))) {
+    playing = false;
+    document.getElementById("play").textContent = "Play";
+    setStep(Number(stepParam));
+  } else {
+    setStep(0);
+    play();
+  }
 })();
 </script>
 </body>
