@@ -4,8 +4,6 @@ Public **Grok Bot + Codex + Limen** delivery harness: same base as the Codex-onl
 
 Independent git history from [`startup-harness-codex`](https://github.com/lmiadowicz/startup-harness-codex) — copy patterns freely; not a fork remote.
 
-Built for the [MEGA autonomous product development](https://mega.dev/autonomous-product-development) challenge context.
-
 ## Get Limen
 
 **Download Limen from:** https://mega.dev/autonomous-product-development  
@@ -46,7 +44,7 @@ Read `grok/TOKEN-BUDGET.md` before wiring Grok Bot routines.
 
 ## Charts (TARGET / design bar)
 
-> **CRITICAL:** Charts showing **100%** are a **TARGET / design bar**, **NOT** a measured MEGA Assessment score. Do **not** claim measured 100% / ORC 100%.
+> **CRITICAL:** Charts showing **100%** are a **TARGET / design bar**, **NOT** a measured assessment score. Do **not** claim measured 100% / ORC 100%.
 
 ### TARGET 100%
 
@@ -73,7 +71,6 @@ python3 -m venv .venv && .venv/bin/pip install matplotlib
 
 - **Limen:** get limen from https://mega.dev/autonomous-product-development — you can download Limen there.
 - **Charts / mega-card skill:** https://github.com/piotrkrych2/Random-Skills — credit **piotrkrych2 / mega-card** for FUT card + 24-spoke spider charts (vendored under `vendor/mega-card/`).
-- **MEGA** autonomous product development challenge context.
 - **pstack quality bar (optional):** Lauren Tan / poteto style — [open-pstack](https://github.com/ericlitman/open-pstack); see `docs/pstack.md`. Keep LICENSE notices if packaging from open-pstack.
 
 See `ATTRIBUTION.md`.
