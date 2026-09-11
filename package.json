@@ -1,0 +1,11 @@
+{
+  "name": "startup-harness-grok-codex",
+  "private": true,
+  "description": "Grok Bot + Codex + Limen delivery harness with thin coordinator token budget",
+  "scripts": {
+    "setup": "bash setup.sh",
+    "setup:product": "bash setup.sh",
+    "charts": "python3 vendor/mega-card/render.py charts/mega-assessment-TARGET-100.md --name TARGET --out-dir charts/tmp-target && python3 vendor/mega-card/render.py charts/mega-assessment-COVERAGE-90.md --name HARNESS --out-dir charts/tmp-90 && cp charts/tmp-target/*.png charts/target-100.png && cp charts/tmp-target/*.png charts/target-100-megacard.png && cp charts/tmp-90/*.png charts/coverage-90.png && cp charts/tmp-90/*.png charts/coverage-90-megacard.png && rm -rf charts/tmp-target charts/tmp-90 && echo 'Charts refreshed (TARGET + ~90%). Remember: design bars, not measured.'",
+    "charts:matplotlib": "python3 scripts/render-charts.py"
+  }
+}

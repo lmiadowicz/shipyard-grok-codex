@@ -1,0 +1,21 @@
+{
+  "generated": "2026-09-11 23:15 CEST",
+  "merged": [],
+  "needs_review": [
+    {
+      "number": 42,
+      "title": "Sample draft PR — Done-when + evidence linked",
+      "branch": "codex/f012-slug",
+      "url": "https://github.com/example/product/pull/42",
+      "draft": true
+    }
+  ],
+  "blocked": [
+    {
+      "number": 39,
+      "reason": "ci-not-green",
+      "title": "Sample blocked PR"
+    }
+  ],
+  "policy": "Auto-merge iff label delivery:reviewer-pass + authoritative CI green (optional)"
+}

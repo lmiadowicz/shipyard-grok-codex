@@ -8,9 +8,32 @@ Independent git history from [`startup-harness-codex`](https://github.com/lmiado
 
 **Download Limen from:** https://mega.dev/autonomous-product-development  
 
-You can download Limen there (and related Herdr tooling). This harness assumes `limen` / `herdr` / `gh` / Codex are available on your Mac PATH.
+You can download Limen there (and related Herdr tooling).
 
-## Quick start
+## How it works
+
+```mermaid
+flowchart LR
+  Vision[Vision] --> Tickets[Tickets Done-when]
+  Style[Styleguide] --> Tickets
+  Board[Board NOW/NEXT/PARK] --> Tickets
+  Tickets --> Limen[limen --tab + Codex]
+  Limen --> Review[Reviewer / Taste]
+  Review --> Merge[Thin coordinator merge]
+  Merge --> Board
+```
+
+| Piece | Role |
+| --- | --- |
+| **Board** | STATUS / ACTIONS + NOW / NEXT / PARK |
+| **Vision** | `spec/vision.md` — product north star |
+| **Styleguides** | `spec/styleguide.md` — UI/craft rules |
+| **Tickets** | Done-when → limen/Codex → review → merge |
+| **Coordinator** | Stays **thin** — merge after PASS / owner taste only (see `grok/TOKEN-BUDGET.md`) |
+
+Details: [`docs/how-it-works.md`](docs/how-it-works.md).
+
+## Install into a project
 
 ```bash
 git clone https://github.com/lmiadowicz/startup-harness-grok-codex.git
@@ -23,58 +46,44 @@ bash "$PRODUCT_ROOT/.agents/delivery/scripts/status-dump.sh"
 
 Read `grok/TOKEN-BUDGET.md` before wiring Grok Bot routines.
 
+Full guide: [`docs/install-into-project.md`](docs/install-into-project.md).
+
 ## Grok extras (this repo only)
 
 | Path | Purpose |
 | --- | --- |
-| `grok/TOKEN-BUDGET.md` | Thin coordinator; pause poll crons; Delivery owns STATUS; wake only for merge/taste |
-| `grok/bot-roles.md` | Delivery / Reviewer / Taste / SDLC / Architect one-liners |
-| `grok/routines/*.md` | Sample routine prompts (markdown only, no secrets) |
+| `grok/TOKEN-BUDGET.md` | Thin coordinator; pause poll crons; Delivery owns STATUS |
+| `grok/bot-roles.md` | Delivery / Reviewer / Taste / SDLC / Architect |
+| `grok/routines/*.md` | Sample routine prompts (no secrets) |
 
-## Shared package (with Codex harness)
+## Charts (design bars — not measured)
 
-| Path | Purpose |
-| --- | --- |
-| `.agents/delivery/scripts/` | orchestrate / review-and-label / status-dump / smoke / install-launchd |
-| `.agents/delivery/PLAYBOOK.md` + `TICKET-TEMPLATE.md` | Quality bar |
-| `docs/pstack.md` | pstack pointers |
-| `setup.sh` | tool checks + install into product repo |
-| `scripts/render-charts.py` | rebuild TARGET charts |
-| `vendor/mega-card/` | chart skill (attributed) |
+> **CRITICAL:** **TARGET 100%** = design bar, **NOT** measured.  
+> **~90%** = harness coverage design goal / example render, **NOT** a claimed measured score.
 
-## Charts (TARGET / design bar)
-
-> **CRITICAL:** Charts showing **100%** are a **TARGET / design bar**, **NOT** a measured assessment score. Do **not** claim measured 100% / ORC 100%.
+Rendered with **Piotr’s mega-card** ([piotrkrych2/Random-Skills](https://github.com/piotrkrych2/Random-Skills)).
 
 ### TARGET 100%
 
-![TARGET 100% design bar](charts/target-100.png)
+![TARGET 100% design bar — mega-card](charts/target-100.png)
 
-### Grok + Codex path
+### ~90% harness coverage (honest gaps)
 
-![Grok+Codex path chart](charts/grok-codex.png)
-
-### Codex-only path (comparison)
-
-![Codex-only path chart](charts/codex-only.png)
-
-### Matplotlib rebuild
-
-![TARGET matplotlib](charts/target-100-matplotlib.png)
+![~90% coverage design goal — mega-card](charts/coverage-90.png)
 
 ```bash
-python3 -m venv .venv && .venv/bin/pip install matplotlib
-.venv/bin/python scripts/render-charts.py
+npm run charts
+# or python3 vendor/mega-card/render.py …
 ```
 
 ## Credits
 
-- **Limen:** get limen from https://mega.dev/autonomous-product-development — you can download Limen there.
-- **Charts / mega-card skill:** https://github.com/piotrkrych2/Random-Skills — credit **piotrkrych2 / mega-card** for FUT card + 24-spoke spider charts (vendored under `vendor/mega-card/`).
-- **pstack quality bar (optional):** Lauren Tan / poteto style — [open-pstack](https://github.com/ericlitman/open-pstack); see `docs/pstack.md`. Keep LICENSE notices if packaging from open-pstack.
+- **Limen:** https://mega.dev/autonomous-product-development
+- **Charts / mega-card:** https://github.com/piotrkrych2/Random-Skills — **piotrkrych2 / mega-card**
+- **pstack (optional):** [open-pstack](https://github.com/ericlitman/open-pstack) — see `docs/pstack.md`
 
 See `ATTRIBUTION.md`.
 
 ## License
 
-Scripts and docs in this repo: use freely for your product harness. Vendored `vendor/mega-card/` retains upstream attribution. Upstream limen / pstack / Codex / Grok remain under their own terms.
+Scripts and docs: use freely. Vendored `vendor/mega-card/` retains upstream attribution.

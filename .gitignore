@@ -8,3 +8,7 @@
 __pycache__/
 *.pyc
 .cache/
+node_modules/
+.venv/
+charts/tmp-*/
+charts/*.html
