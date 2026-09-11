@@ -1,45 +1,78 @@
 #!/usr/bin/env bash
-# Rebuild TARGET 100% + ~90% coverage mega-card PNGs (FUT + 24-spoke).
-# Implementation detail: calls Piotr’s vendored mega-card (Python + Chrome headless).
-# Harness DX stays shell-first — do not advertise a Python venv for day-to-day use.
+# Render MEASURED MEGA assessments → charts/measured-*.png via TypeScript mega-card (English UI).
+# Design bars (TARGET/90) only via --archive → charts/archive/
 set -euo pipefail
-ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-VENDOR="$ROOT/vendor/mega-card/render.py"
+HERE="$(cd "$(dirname "$0")" && pwd)"
+ROOT="$(cd "$HERE/.." && pwd)"
 CHARTS="$ROOT/charts"
+VENDOR_TS="$ROOT/vendor/mega-card/render.ts"
+ARCHIVE="$CHARTS/archive"
+OUT_TMP="$CHARTS/.render-tmp"
+MODE="${1:-measured}"
 
-if [[ ! -f "$VENDOR" ]]; then
-  echo "Missing $VENDOR — vendor mega-card from https://github.com/piotrkrych2/Random-Skills" >&2
-  exit 1
+die() { echo "$*" >&2; exit 1; }
+[[ -f "$VENDOR_TS" ]] || die "Missing $VENDOR_TS"
+command -v node >/dev/null 2>&1 || die "Node.js required (https://nodejs.org/)"
+
+cd "$ROOT"
+if [[ ! -d node_modules/tsx ]]; then
+  echo "Installing chart deps (tsx)…"
+  npm install --no-fund --no-audit
 fi
 
-if ! command -v python3 >/dev/null 2>&1; then
-  echo "python3 required only to run vendor/mega-card/render.py (Piotr’s tool)" >&2
-  exit 1
+chrome_shot() {
+  local html="$1" png="$2"
+  if ! command -v google-chrome >/dev/null 2>&1 && ! command -v chromium >/dev/null 2>&1 \
+     && [[ ! -x "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" ]]; then
+    echo "WARN: no Chrome/Chromium — keeping existing $png" >&2
+    return 0
+  fi
+  local chrome
+  if [[ -x "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" ]]; then
+    chrome="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+  else
+    chrome="$(command -v google-chrome || command -v chromium)"
+  fi
+  "$chrome" --headless=new --no-sandbox --disable-dev-shm-usage --disable-gpu \
+    --hide-scrollbars --force-device-scale-factor=2 --window-size=1600,1240 \
+    --screenshot="$png" "file://$html" >/dev/null 2>&1 || {
+      echo "WARN: Chrome screenshot failed for $png" >&2
+      return 0
+    }
+  sleep 1
+  [[ -s "$png" ]] && echo "Wrote $png"
+}
+
+render_one() {
+  local report="$1" name="$2" dest_png="$3" dest_html="$4"
+  [[ -f "$report" ]] || { echo "skip missing $report"; return 0; }
+  rm -rf "$OUT_TMP"
+  mkdir -p "$OUT_TMP"
+  echo "mega-card (tsx): $report"
+  npx --yes tsx "$VENDOR_TS" "$report" --name "$name" --out-dir "$OUT_TMP" --no-png
+  local html
+  html="$(ls -1 "$OUT_TMP"/*.html | head -1)"
+  [[ -n "$html" ]] || die "no HTML from mega-card"
+  cp -f "$html" "$dest_html"
+  chrome_shot "$dest_html" "$dest_png"
+}
+
+mkdir -p "$CHARTS" "$ARCHIVE"
+
+if [[ "$MODE" == "--archive" ]]; then
+  echo "Archive mode: TARGET/design bars only (not primary README charts)"
+  # leave archive as-is; do not promote to charts/
+  exit 0
 fi
 
-echo "Rendering TARGET 100% mega-card…"
-python3 "$VENDOR" "$CHARTS/mega-assessment-TARGET-100.md" --name TARGET --out-dir "$CHARTS/tmp-target"
-echo "Rendering ~90% coverage mega-card…"
-python3 "$VENDOR" "$CHARTS/mega-assessment-COVERAGE-90.md" --name HARNESS --out-dir "$CHARTS/tmp-90"
-
-# Prefer the PNG mega-card wrote (FUT + spider); copy to canonical README names
-shopt -s nullglob
-target_pngs=("$CHARTS"/tmp-target/*.png)
-cov_pngs=("$CHARTS"/tmp-90/*.png)
-if [[ ${#target_pngs[@]} -lt 1 || ${#cov_pngs[@]} -lt 1 ]]; then
-  echo "mega-card did not produce PNGs (is Google Chrome / Chromium installed?)" >&2
-  exit 1
+# Detect which measured reports exist
+if [[ -f "$CHARTS/mega-assessment-MEASURED-grok-codex.md" ]]; then
+  render_one "$CHARTS/mega-assessment-MEASURED-grok-codex.md" "SHIPYARD GROK+CODEX" \
+    "$CHARTS/measured-grok-codex.png" "$CHARTS/measured-grok-codex-megacard.html"
+fi
+if [[ -f "$CHARTS/mega-assessment-MEASURED-codex-only.md" ]]; then
+  render_one "$CHARTS/mega-assessment-MEASURED-codex-only.md" "SHIPYARD CODEX" \
+    "$CHARTS/measured-codex-only.png" "$CHARTS/measured-codex-only-megacard.html"
 fi
 
-cp -f "${target_pngs[0]}" "$CHARTS/target-100.png"
-cp -f "${target_pngs[0]}" "$CHARTS/target-100-megacard.png"
-cp -f "${cov_pngs[0]}" "$CHARTS/coverage-90.png"
-cp -f "${cov_pngs[0]}" "$CHARTS/coverage-90-megacard.png"
-
-# Keep HTML next to assessments for local preview (gitignored via charts/*.html often)
-cp -f "$CHARTS"/tmp-target/*.html "$CHARTS/target-100-megacard.html" 2>/dev/null || true
-cp -f "$CHARTS"/tmp-90/*.html "$CHARTS/coverage-90-megacard.html" 2>/dev/null || true
-
-rm -rf "$CHARTS/tmp-target" "$CHARTS/tmp-90"
-echo "Wrote charts/target-100.png and charts/coverage-90.png (mega-card FUT + 24-spoke)."
-echo "Remember: TARGET 100% and ~90% are design bars — not measured scores."
+echo "Done. Primary charts are MEASURED only (English mega-card)."

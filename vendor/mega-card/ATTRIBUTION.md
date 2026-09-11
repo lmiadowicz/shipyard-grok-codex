@@ -1,2 +1,4 @@
-Source: https://github.com/piotrkrych2/Random-Skills (mega-card skill).
-Credit: piotrkrych2 / mega-card for FUT card + 24-spoke spider charts.
+# mega-card attribution
+
+Vendored from [piotrkrych2/Random-Skills](https://github.com/piotrkrych2/Random-Skills) `mega-card/`.
+Template localized to English for Shipyard READMEs. Renderer ported to TypeScript.

@@ -1,10 +1,15 @@
 {
   "name": "startup-harness-grok-codex",
   "private": true,
-  "description": "For orchestrating my startup projects \u2014 I build microsaas, tools, mobile apps, etc. Optimized for highest quality, reliability, and token efficiency.",
+  "type": "module",
+  "description": "AI delivery shipyard \u2014 board \u2192 limen/Pi \u2192 Codex \u2192 review \u2192 merge. Quality, reliability, token efficiency.",
   "scripts": {
     "setup": "bash setup.sh",
-    "setup:product": "bash setup.sh",
-    "charts": "bash scripts/render-charts.sh"
+    "charts": "bash scripts/render-charts.sh",
+    "charts:render": "bash scripts/render-charts.sh"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
   }
 }

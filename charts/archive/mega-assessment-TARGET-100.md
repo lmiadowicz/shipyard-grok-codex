@@ -1,9 +1,7 @@
-# TARGET design bar — NOT a measured score
+# MEGA TARGET design bar — NOT a measured score
 
 **Data skanu:** 2026-09-11
-Epizody zadaniowe: **20**
-**TARGET / design goal = 100% — not claimed as measured.**
-Use to drive harness work until measured charts catch up.
+Epizody zadaniowe: **20**\n**TARGET / design goal = 100% — not claimed as measured.**\nUse to drive harness work until measured charts catch up.
 
 ## Traits
 
@@ -37,4 +35,5 @@ Use to drive harness work until measured charts catch up.
 ## Notes
 
 - THIS IS AN ASPIRATIONAL TARGET CHART, not an assessment result.
-- Do not treat as a measured skill score.
+- Do not upload. Do not treat as MEGA score.
+- To make measured charts approach this: record attachments, compaction, worktree isolation; multi-day episodes; smoke path evidence; Done-when on every ticket.

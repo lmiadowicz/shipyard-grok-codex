@@ -39,7 +39,3 @@ Patterns genericized from a production agentic product harness. Adapt names/labe
 2. `orchestrate.sh` writes `STATUS.md` + `ACTIONS.json`
 3. Prefer `review-and-label.sh <PR>` over waking a chat coordinator
 4. Wake the coordinator only for merge after clean PASS or owner taste — never FYI spam
-
-## Limen
-
-Download: https://mega.dev/autonomous-product-development — always prefer `limen spawn|continue … --tab` with `gpt-6-astra` and thinking high for UI.

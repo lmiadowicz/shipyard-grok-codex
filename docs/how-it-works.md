@@ -1,28 +1,31 @@
-# How it works
+# How it works (Grok Bot + Codex + Limen)
 
-## English
+Flow: **Board (NOW / NEXT / PARK) → Tickets (Done-when) → limen / Pi workers → Codex (+ Grok thin coordinator) → Review → Merge**.
 
-1. **Vision** (`spec/vision.md`) — product north star. Agents read it before expanding scope.
-2. **Styleguides** (`spec/styleguide.md`) — UI/craft rules workers must follow (density, motion, a11y, “taste fails if”).
-3. **Board** — tracks work: `STATUS.md` + `ACTIONS.json` + NOW/NEXT/PARK ticket board.
-4. **Tickets** — each has In/Out/Forbidden + **Done-when** (falsifiable checks).
-5. **Workers** — limen `--tab` + Codex implement one ticket at a time (max 1–2 live).
-6. **Review → merge** — Reviewer PASS (+ Taste for UI) before owner merge. Evidence under `.verification/evidence/`.
+Polished walkthrough: open [orchestration-animation.html](orchestration-animation.html) (also embedded from the README).
 
-```mermaid
-flowchart LR
-  Vision[Vision] --> Tickets[Tickets Done-when]
-  Style[Styleguide] --> Tickets
-  Board[Board NOW/NEXT/PARK] --> Tickets
-  Tickets --> Limen[limen --tab + Codex]
-  Limen --> Review[Reviewer / Taste]
-  Review --> Merge[Owner merge]
-  Merge --> Board
+## Loop
+
+1. **Board** — keep at most 1–2 jobs in NOW; NEXT is queued; PARK is deferred.
+2. **Tickets** — every card has In / Out / Forbidden + falsifiable **Done-when**.
+3. **Workers** — `limen` / Pi agents implement.
+4. **Codex** — coding agent; **Grok Bot** stays a **thin coordinator** (token budget — see `grok/TOKEN-BUDGET.md`): Delivery owns STATUS; wake Grok only for merge / taste — never FYI spam.
+5. **Review** — Reviewer (+ Taste when UI) PASS / HOLD / FAIL.
+6. **Merge** — owner / coordinator after clean PASS.
+
+## Install
+
+```bash
+bash setup.sh
+bash setup.sh /path/to/your-product
 ```
 
-## Polski (krótko)
+Read `grok/TOKEN-BUDGET.md` before wiring routines.
 
-1. **Vision** — dokąd idzie produkt.
-2. **Styleguide** — reguły UI/craft dla agentów.
-3. **Board** — NOW/NEXT/PARK + STATUS/ACTIONS.
-4. **Tickety** z Done-when → limen/Codex → review → merge.
+## Charts
+
+Primary spider is **MEASURED** Grok+Codex **ORC 69** (Codex-only comparison **65**). See [chart-traits.md](chart-traits.md). TARGET/90 only in `charts/archive/`.
+
+## pstack
+
+Optional quality bar — [pstack.md](pstack.md).

@@ -26,7 +26,3 @@ Goal: burn almost no SuperGrok on standing wakes. Prefer shell / limen / `gh` + 
 | Reviewer PASS + CI green | Yes — merge decision |
 | Taste URL ready | Yes — taste only |
 | FYI / “still working” | **Never** |
-
-## Note
-
-The **coordinator stays thin**: Delivery owns the loop; coordinator wakes only for merge after clean Reviewer PASS or owner taste URLs — never FYI spam.
